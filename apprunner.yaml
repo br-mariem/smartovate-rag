@@ -1,0 +1,17 @@
+version: 1.0
+runtime: python311
+build:
+  commands:
+    build:
+      - pip install -r requirements-app.txt
+run:
+  runtime-version: 3.11
+  command: bash start.sh
+  network:
+    port: 8080
+    env: PORT
+  env:
+    - name: AWS_REGION
+      value: "eu-north-1"
+    - name: S3_BUCKET_NAME
+      value: "smartovate-rag-docs-mariem"

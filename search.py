@@ -17,7 +17,7 @@ REGION = os.getenv("AWS_REGION")
 EMBEDDING_MODEL_ID = "amazon.titan-embed-text-v2:0"
 
 # --- Mêmes valeurs que dans load_to_opensearch.py (Outputs de cdk deploy) ---
-COLLECTION_ENDPOINT = "gpeln5w6xfclawqxb625.eu-north-1.aoss.amazonaws.com"
+COLLECTION_ENDPOINT = "ubm0ky3d9lqxisoc0mlj.eu-north-1.aoss.amazonaws.com"
 INDEX_NAME = "rag-chunks-index"
 TOP_K = 5
 

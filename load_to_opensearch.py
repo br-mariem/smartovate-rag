@@ -18,7 +18,7 @@ BUCKET_NAME = os.getenv("S3_BUCKET_NAME")
 
 # --- Valeurs récupérées des Outputs de "cdk deploy" (US 2.1) ---
 # Remplacez par vos propres valeurs si elles diffèrent
-COLLECTION_ENDPOINT = "gpeln5w6xfclawqxb625.eu-north-1.aoss.amazonaws.com"
+COLLECTION_ENDPOINT = "ubm0ky3d9lqxisoc0mlj.eu-north-1.aoss.amazonaws.com"
 INDEX_NAME = "rag-chunks-index"
 
 s3 = boto3.client("s3", region_name=REGION)

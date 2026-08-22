@@ -27,6 +27,7 @@ BACKEND_USER_ARN = "arn:aws:iam::136609826386:user/rag-backend-mariem"
 # ARN du rôle technique utilisé par CDK/CloudFormation pour déployer
 # (nécessaire car c'est LUI qui exécute concrètement la création de l'index, pas l'utilisateur)
 CDK_EXEC_ROLE_ARN = "arn:aws:iam::136609826386:role/cdk-hnb659fds-cfn-exec-role-136609826386-eu-north-1"
+APP_RUNNER_INSTANCE_ROLE_ARN = "arn:aws:iam::136609826386:role/AppRunnerInstanceRole"
 
 
 class InfraStack(Stack):
@@ -68,7 +69,7 @@ class InfraStack(Stack):
             policy=(
                 f'[{{"Rules":[{{"ResourceType":"collection","Resource":["collection/{COLLECTION_NAME}"],'
                 f'"Permission":["aoss:*"]}},{{"ResourceType":"index","Resource":["index/{COLLECTION_NAME}/*"],'
-                f'"Permission":["aoss:*"]}}],"Principal":["{BACKEND_USER_ARN}","{CDK_EXEC_ROLE_ARN}"]}}]'
+                f'"Permission":["aoss:*"]}}],"Principal":["{BACKEND_USER_ARN}","{CDK_EXEC_ROLE_ARN}","{APP_RUNNER_INSTANCE_ROLE_ARN}"]}}]'
             ),
         )
         data_access_policy.add_dependency(collection)

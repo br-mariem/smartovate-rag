@@ -14,6 +14,7 @@ Les données restent en sécurité dans S3 (dossier embeddings/) entre les deux.
 from aws_cdk import Stack, CfnOutput
 from constructs import Construct
 from aws_cdk import aws_opensearchserverless as opensearchserverless
+from aws_cdk import aws_ssm as ssm
 
 # --- Configuration ---
 COLLECTION_NAME = "smartovate-rag-collection"
@@ -103,6 +104,17 @@ class InfraStack(Stack):
             ),
         )
         index.add_dependency(data_access_policy)
+
+        # --- 6. Paramètre SSM : rend l'endpoint accessible dynamiquement
+        # aux scripts Python (local ou déployé sur ECS), sans valeur en dur ---
+        endpoint_param = ssm.StringParameter(
+            self, "OpenSearchEndpointParam",
+            parameter_name="/smartovate-rag/opensearch-endpoint",
+            string_value=collection.attr_collection_endpoint,
+            description="Endpoint de la collection OpenSearch Serverless (mis à jour à chaque déploiement)",
+        )
+        endpoint_param.node.add_dependency(collection)
+
 
         # --- Sorties utiles (affichées après cdk deploy) ---
         CfnOutput(self, "CollectionEndpoint", value=collection.attr_collection_endpoint)

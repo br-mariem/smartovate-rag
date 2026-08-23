@@ -18,7 +18,17 @@ BUCKET_NAME = os.getenv("S3_BUCKET_NAME")
 
 # --- Valeurs récupérées des Outputs de "cdk deploy" (US 2.1) ---
 # Remplacez par vos propres valeurs si elles diffèrent
-COLLECTION_ENDPOINT = "ubm0ky3d9lqxisoc0mlj.eu-north-1.aoss.amazonaws.com"
+
+def get_collection_endpoint():
+    """Récupère dynamiquement l'endpoint OpenSearch depuis SSM Parameter Store,
+    en retirant le préfixe https:// car le client opensearch-py l'ajoute lui-même."""
+    ssm = boto3.client("ssm", region_name="eu-north-1")
+    response = ssm.get_parameter(Name="/smartovate-rag/opensearch-endpoint")
+    endpoint = response["Parameter"]["Value"]
+    return endpoint.replace("https://", "")
+
+COLLECTION_ENDPOINT = get_collection_endpoint()
+
 INDEX_NAME = "rag-chunks-index"
 
 s3 = boto3.client("s3", region_name=REGION)

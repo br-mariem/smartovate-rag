@@ -17,7 +17,18 @@ REGION = os.getenv("AWS_REGION")
 EMBEDDING_MODEL_ID = "amazon.titan-embed-text-v2:0"
 
 # --- Mêmes valeurs que dans load_to_opensearch.py (Outputs de cdk deploy) ---
-COLLECTION_ENDPOINT = "ubm0ky3d9lqxisoc0mlj.eu-north-1.aoss.amazonaws.com"
+
+def get_collection_endpoint():
+    """Récupère dynamiquement l'endpoint OpenSearch depuis SSM Parameter Store,
+    en retirant le préfixe https:// car le client opensearch-py l'ajoute lui-même."""
+    ssm = boto3.client("ssm", region_name="eu-north-1")
+    response = ssm.get_parameter(Name="/smartovate-rag/opensearch-endpoint")
+    endpoint = response["Parameter"]["Value"]
+    return endpoint.replace("https://", "")
+
+COLLECTION_ENDPOINT = get_collection_endpoint()
+
+
 INDEX_NAME = "rag-chunks-index"
 TOP_K = 5
 

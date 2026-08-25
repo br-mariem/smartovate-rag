@@ -13,6 +13,7 @@ RUN pip install --no-cache-dir -r requirements-app.txt
 
 # Copie le code de l'application
 COPY main.py search.py generate.py chatbot.py start.sh ./
+COPY .streamlit/ .streamlit/
 
 RUN chmod +x start.sh
 

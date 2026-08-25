@@ -1,0 +1,10 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "ssm:GetParameter",
+      "Resource": "arn:aws:ssm:eu-north-1:136609826386:parameter/smartovate-rag/opensearch-endpoint"
+    }
+  ]
+}
